@@ -1,0 +1,18 @@
+services:
+  embeddings:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: embeddings-api:latest
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    # Keeps the user's terminal experience clean by capping logs
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
